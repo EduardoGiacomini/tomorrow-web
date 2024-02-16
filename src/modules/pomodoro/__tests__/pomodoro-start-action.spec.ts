@@ -4,6 +4,7 @@ import {
   pomodoroReducer,
   startPomodoro,
 } from "../reducers";
+import { PomodoroState } from "../reducers/pomodoro-state";
 
 describe("startPomodoro()", () => {
   describe("given a new pomodoro", () => {
@@ -30,17 +31,36 @@ describe("startPomodoro()", () => {
         expect(state.error).toBe(PomodoroError.tooLong);
       });
     });
+
+    describe("when I start the pomodoro with seconds between 5 minutes and 1 hour", () => {
+      test("it should start the countdown with the given seconds", () => {
+        const oneHourInSeconds = 60 * 60;
+        const action = startPomodoro(oneHourInSeconds);
+        const state = pomodoroReducer(POMODORO_INITIAL_STATE, action);
+
+        expect(state.error).toBeUndefined();
+        expect(state.running).toBeTruthy();
+        expect(state.seconds).toBe(oneHourInSeconds);
+      });
+    });
   });
 
-  describe("given a new pomodoro with seconds between 5 minutes and 1 hour", () => {
-    test("it should start the countdown with the given seconds", () => {
-      const oneHourInSeconds = 60 * 60;
-      const action = startPomodoro(oneHourInSeconds);
-      const state = pomodoroReducer(POMODORO_INITIAL_STATE, action);
+  describe("given a running pomodoro", () => {
+    describe("when I start the pomodoro again with 30 minutes", () => {
+      test("it should continue without reset the seconds", () => {
+        const runningPomodoroState: PomodoroState = {
+          error: undefined,
+          running: true,
+          seconds: 30 * 60,
+        };
+        const fiveMinutesInSeconds = 30 * 60;
+        const action = startPomodoro(fiveMinutesInSeconds);
+        const state = pomodoroReducer(runningPomodoroState, action);
 
-      expect(state.error).toBeUndefined();
-      expect(state.running).toBeTruthy();
-      expect(state.seconds).toBe(oneHourInSeconds);
+        expect(state.seconds).toBe(30 * 60);
+        expect(state.running).toBeTruthy();
+        expect(state.error).toBeUndefined();
+      });
     });
   });
 });
