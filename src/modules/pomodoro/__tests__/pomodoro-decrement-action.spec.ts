@@ -44,7 +44,6 @@ describe("decrementPomodoro()", () => {
     describe("when I decrement the pomodoro", () => {
       test("it should decrement one second", () => {
         const action = decrementPomodoro();
-        /// Pomodoro has just finished
         const runningPomodoroState: PomodoroState = {
           error: undefined,
           running: true,
