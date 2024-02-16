@@ -23,15 +23,15 @@ export const pomodoroStartAction = (
     return state;
   }
 
-  // const fiveMinutesInSeconds = 5 * 60;
-  // if (seconds < fiveMinutesInSeconds) {
-  //   return { ...state, error: PomodoroError.tooShort };
-  // }
+  const fiveMinutesInSeconds = 5 * 60;
+  if (seconds < fiveMinutesInSeconds) {
+    return { ...state, error: PomodoroError.tooShort };
+  }
 
-  // const oneHourInSeconds = 60 * 60;
-  // if (seconds > oneHourInSeconds) {
-  //   return { ...state, error: PomodoroError.tooLong };
-  // }
+  const oneHourInSeconds = 60 * 60;
+  if (seconds > oneHourInSeconds) {
+    return { ...state, error: PomodoroError.tooLong };
+  }
 
   return { ...state, seconds, running: true, error: undefined };
 };
