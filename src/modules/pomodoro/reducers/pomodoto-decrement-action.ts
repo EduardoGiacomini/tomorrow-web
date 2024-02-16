@@ -12,9 +12,9 @@ export const pomodoroDecrementAction = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _action: PomodoroDecrementAction
 ): PomodoroState => {
-  const { seconds } = state;
+  const { seconds, running } = state;
 
-  if (seconds <= 0) {
+  if (!running || seconds <= 0) {
     return state;
   }
 

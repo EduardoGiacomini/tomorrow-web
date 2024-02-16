@@ -1,3 +1,5 @@
+import { Pomodoro } from "./modules/pomodoro/screens/pomodoro";
+
 export function App(): React.ReactElement {
-  return <p>Hello World</p>;
+  return <Pomodoro />;
 }
