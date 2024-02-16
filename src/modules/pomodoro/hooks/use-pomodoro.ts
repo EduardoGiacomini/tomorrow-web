@@ -1,4 +1,11 @@
 import React from "react";
+import {
+  POMODORO_INITIAL_STATE,
+  pomodoroReducer,
+  startPomodoro,
+  pausePomodoro,
+  decrementPomodoro,
+} from "../reducers";
 
 export enum PomodoroError {
   tooLong,
@@ -9,33 +16,35 @@ interface PomodoroContract {
   seconds: number;
   error?: PomodoroError | undefined;
   start: (seconds: number) => void;
+  pause: () => void;
 }
 
 export function usePomodoro(): PomodoroContract {
-  const [error, setError] = React.useState<PomodoroError | undefined>();
-  const [seconds, setSeconds] = React.useState<number>(0);
+  const [state, dispatch] = React.useReducer(
+    pomodoroReducer,
+    POMODORO_INITIAL_STATE
+  );
+  const { error, running, seconds } = state;
 
   React.useEffect(() => {
-    if (seconds > 0) {
-      setTimeout(() => setSeconds(seconds - 1), 1000);
-    } 
-  }, [seconds]);
+    if (running && seconds > 0) {
+      setTimeout(() => dispatch(decrementPomodoro()), 1000);
+      return;
+    }
+
+    if (running && seconds === 0) {
+      dispatch(pausePomodoro());
+      return;
+    }
+  }, [running, seconds]);
 
   const start = React.useCallback((timerSeconds: number) => {
-    const fiveMinutesInSeconds = 5 * 60;
-    if (timerSeconds < fiveMinutesInSeconds) {
-      setError(PomodoroError.tooShort);
-      return;
-    }
-
-    const oneHourInSeconds = 60 * 60;
-    if (timerSeconds > oneHourInSeconds) {
-      setError(PomodoroError.tooLong);
-      return;
-    }
-
-    setSeconds(timerSeconds);
+    dispatch(startPomodoro(timerSeconds));
   }, []);
 
-  return { seconds, error, start };
+  const pause = React.useCallback(() => {
+    dispatch(pausePomodoro());
+  }, []);
+
+  return { seconds, error, start, pause };
 }
