@@ -36,7 +36,7 @@ export function usePomodoro(): PomodoroContract {
   React.useEffect(() => {
     /// If pomodoro running, decrements pomodoro after 1 second
     if (running && seconds > 0) {
-      setTimeout(() => dispatch(decrementPomodoro()), 10);
+      setTimeout(() => dispatch(decrementPomodoro()), 1000);
       return;
     }
 
