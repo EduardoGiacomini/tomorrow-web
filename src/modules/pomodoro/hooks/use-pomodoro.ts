@@ -10,13 +10,16 @@ import {
   pausePomodoro,
   decrementPomodoro,
   PomodoroError,
+  resumePomodoro,
 } from "../reducers";
 
 interface PomodoroContract {
   seconds: number;
+  running: boolean;
   error?: PomodoroError | undefined;
   start: (seconds: number) => void;
   pause: () => void;
+  resume: () => void;
 }
 
 /**
@@ -62,5 +65,10 @@ export function usePomodoro(): PomodoroContract {
     playPomodoroPauseSound();
   }, [playPomodoroPauseSound]);
 
-  return { seconds, error, start, pause };
+  const resume = React.useCallback(() => {
+    dispatch(resumePomodoro());
+    playPomodoroStartSound();
+  }, [playPomodoroStartSound]);
+
+  return { seconds, running, error, start, pause, resume };
 }

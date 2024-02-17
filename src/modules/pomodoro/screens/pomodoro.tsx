@@ -5,7 +5,20 @@ import { PauseOutlined, PlayArrowOutlined } from "@mui/icons-material";
 import { DateTimeUtils } from "../../../utils";
 
 export function Pomodoro(): React.ReactElement {
-  const { seconds, start, pause } = usePomodoro();
+  const { seconds, running, start, pause, resume } = usePomodoro();
+
+  const onPlayButtonClicked = (): void => {
+    if (seconds <= 0) {
+      const thirtyMinutesInSeconds = 30 * 60;
+      start(thirtyMinutesInSeconds);
+    } else {
+      resume();
+    }
+  };
+
+  const onPauseButtonClicked = (): void => {
+    pause();
+  };
 
   return (
     <Stack
@@ -27,10 +40,10 @@ export function Pomodoro(): React.ReactElement {
         flexDirection="row"
         justifyContent="center"
       >
-        <IconButton onClick={() => start(5 * 60)}>
+        <IconButton disabled={running} onClick={onPlayButtonClicked}>
           <PlayArrowOutlined />
         </IconButton>
-        <IconButton onClick={() => pause()}>
+        <IconButton disabled={!running} onClick={onPauseButtonClicked}>
           <PauseOutlined />
         </IconButton>
       </Stack>
