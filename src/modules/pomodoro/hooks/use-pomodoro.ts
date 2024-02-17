@@ -23,14 +23,15 @@ interface PomodoroContract {
  * usePomodoro() is a hook to [start, pause] pomodoro countdown.
  */
 export function usePomodoro(): PomodoroContract {
-  const [playPomodoroEndSound] = useSound(pomodoroEndSound);
-  const [playPomodoroPauseSound] = useSound(pomodoroPauseSound);
-  const [playPomodoroStartSound] = useSound(pomodoroStartSound);
   const [state, dispatch] = React.useReducer(
     pomodoroReducer,
     POMODORO_INITIAL_STATE
   );
   const { error, running, seconds } = state;
+
+  const [playPomodoroEndSound] = useSound(pomodoroEndSound);
+  const [playPomodoroPauseSound] = useSound(pomodoroPauseSound);
+  const [playPomodoroStartSound] = useSound(pomodoroStartSound);
 
   /// When [seconds, running] state changes...
   React.useEffect(() => {
