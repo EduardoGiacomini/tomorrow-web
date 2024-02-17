@@ -1,4 +1,8 @@
 import React from "react";
+import useSound from "use-sound";
+import pomodoroEndSound from "../../../assets/sounds/pomodoro-end.mp3";
+import pomodoroStartSound from "../../../assets/sounds/pomodoro-start.mp3";
+import pomodoroPauseSound from "../../../assets/sounds/pomodoro-pause.mp3";
 import {
   POMODORO_INITIAL_STATE,
   pomodoroReducer,
@@ -19,6 +23,9 @@ interface PomodoroContract {
  * usePomodoro() is a hook to [start, pause] pomodoro countdown.
  */
 export function usePomodoro(): PomodoroContract {
+  const [playPomodoroEndSound] = useSound(pomodoroEndSound);
+  const [playPomodoroPauseSound] = useSound(pomodoroPauseSound);
+  const [playPomodoroStartSound] = useSound(pomodoroStartSound);
   const [state, dispatch] = React.useReducer(
     pomodoroReducer,
     POMODORO_INITIAL_STATE
@@ -29,24 +36,30 @@ export function usePomodoro(): PomodoroContract {
   React.useEffect(() => {
     /// If pomodoro running, decrements pomodoro after 1 second
     if (running && seconds > 0) {
-      setTimeout(() => dispatch(decrementPomodoro()), 1000);
+      setTimeout(() => dispatch(decrementPomodoro()), 10);
       return;
     }
 
     /// If pomodoro is finished, pause pomodoro
     if (running && seconds === 0) {
       dispatch(pausePomodoro());
+      playPomodoroEndSound();
       return;
     }
-  }, [running, seconds]);
+  }, [running, seconds, playPomodoroEndSound]);
 
-  const start = React.useCallback((timerSeconds: number) => {
-    dispatch(startPomodoro(timerSeconds));
-  }, []);
+  const start = React.useCallback(
+    (timerSeconds: number) => {
+      dispatch(startPomodoro(timerSeconds));
+      playPomodoroStartSound();
+    },
+    [playPomodoroStartSound]
+  );
 
   const pause = React.useCallback(() => {
     dispatch(pausePomodoro());
-  }, []);
+    playPomodoroPauseSound();
+  }, [playPomodoroPauseSound]);
 
   return { seconds, error, start, pause };
 }
