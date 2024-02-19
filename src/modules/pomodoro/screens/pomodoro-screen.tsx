@@ -4,7 +4,7 @@ import { usePomodoro } from "../hooks";
 import { PauseOutlined, PlayArrowOutlined } from "@mui/icons-material";
 import { DateTimeUtils } from "../../../utils";
 
-export function Pomodoro(): React.ReactElement {
+export function PomodoroScreen(): React.ReactElement {
   const { seconds, running, start, pause, resume } = usePomodoro();
 
   const onPlayButtonClicked = (): void => {
