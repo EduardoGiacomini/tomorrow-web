@@ -1,5 +1,5 @@
-import { PomodoroScreen } from "./modules/pomodoro/screens/pomodoro-screen";
+import { CollageScreen } from "./modules/workout/screens/collage-screen";
 
 export function App(): React.ReactElement {
-  return <PomodoroScreen />;
+  return <CollageScreen />;
 }
