@@ -1,5 +1,11 @@
-import { CollageScreen } from "./modules/workout/screens/collage-screen";
+import { BottomNavigation, Container } from "./components";
+import { FlashCardsScreen } from "./modules/flash-cards";
 
 export function App(): React.ReactElement {
-  return <CollageScreen />;
+  return (
+    <Container>
+      <FlashCardsScreen />
+      <BottomNavigation />
+    </Container>
+  );
 }
