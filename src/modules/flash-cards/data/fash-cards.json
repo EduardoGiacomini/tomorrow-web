@@ -1,18 +1,31 @@
 [
   {
+    "id": "react",
     "title": "React.js",
     "area": "Technology",
     "icon": "💅",
     "star": true,
+    "color": "#E11586",
     "cards": [
       {
+        "id": "what-do-we-need-to-avoid-when-using-reducers",
         "question": "What do we need to avoid when using reducers?",
         "answer": "Not pure action functions! Because actions are queued unti the next render and any side effect should be avoided! (requests, timers, operations that impact things outside the component)"
       },
       {
+        "id": "give-three-advantages-to-use-reducers-instead-states",
         "question": "Give three advantages to use reducers instead states?",
         "answer": "1. Testing: with reducers it is easy to write unit testing.\n2. Debbuging: we can use console.log for see why and when the action is running.\n 3. Readability: for complex states reducers can be simpler."
       }
     ]
+  },
+  {
+    "id": "java",
+    "title": "Java",
+    "area": "Technology",
+    "icon": "💅",
+    "star": false,
+    "color": "#A235F9",
+    "cards": []
   }
 ]
