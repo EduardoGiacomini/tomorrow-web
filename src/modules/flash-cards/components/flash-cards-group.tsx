@@ -1,14 +1,21 @@
 import React from "react";
-import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Typography,
+  CardProps,
+} from "@mui/material";
 import { FlashCardGroupModel } from "../models";
 
 interface Props {
   group: FlashCardGroupModel;
 }
 
-export function FlashCardGroup(props: Props): React.ReactElement {
-  const { group } = props;
-
+export function FlashCardGroup({
+  group,
+  ...props
+}: Props & CardProps): React.ReactElement {
   return (
     <Card
       variant="outlined"
@@ -16,6 +23,7 @@ export function FlashCardGroup(props: Props): React.ReactElement {
         cursor: "pointer",
         background: group.color,
       }}
+      {...props}
     >
       <CardActionArea
         sx={{

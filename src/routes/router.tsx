@@ -1,20 +1,26 @@
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ROUTES } from "./routes";
+import { Root } from "./root";
 import { PomodoroScreen } from "../modules/pomodoro";
 import { FlashCardsScreen } from "../modules/flash-cards";
-import { Root } from "./root";
+import { FlashCardsDetailsScreen } from "../modules/flash-cards/screens";
 
 const router = createBrowserRouter([
   {
     element: <Root />,
     children: [
       {
-        path: "/",
+        path: ROUTES.HOME,
         element: <PomodoroScreen />,
       },
       {
-        path: "flash-cards",
+        path: ROUTES.FLASH_CARDS,
         element: <FlashCardsScreen />,
+      },
+      {
+        path: ROUTES.FLASH_CARDS_DETAIL,
+        element: <FlashCardsDetailsScreen />,
       },
     ],
   },
