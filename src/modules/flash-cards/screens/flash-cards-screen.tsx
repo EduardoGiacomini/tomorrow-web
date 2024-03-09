@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "../../../components";
 import { FlashCardGroupModel } from "../models";
 import { FlashCardGroup } from "../components";
-import flashCards from "../data/fash-cards.json";
 import { ROUTES } from "../../../routes";
+import { InMemoryFlashCardRepository } from "../repositories";
+
+const flashCardRepository = new InMemoryFlashCardRepository();
 
 export function FlashCardsScreen(): React.ReactElement {
   const navigate = useNavigate();
+
+  const flashCards = flashCardRepository.getAllFlashCardGroups();
 
   const redirectToFlashCardsGroupScreen = (id: string) => {
     navigate(`${ROUTES.FLASH_CARDS}/${id}`);
